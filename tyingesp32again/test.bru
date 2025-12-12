@@ -1,0 +1,28 @@
+meta {
+  name: test
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://192.168.2.1/api/led
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "debug_led": "Off",
+    "zone_1": "Off",
+    "zone_2": "Off",
+    "zone_3": "Off",
+    "zone_4": "Off",
+    "zone_5": "Off",
+    "zone_6": "Off"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,115 @@
+[package]
+edition      = "2024"
+name         = "trying-esp-hal-again"
+rust-version = "1.88"
+version      = "0.1.0"
+
+[features]
+default = ["debug-led", "zone-6"]
+debug-led = []
+zone-1 = []
+zone-2 = ["zone-1"]
+zone-3 = ["zone-2"]
+zone-4 = ["zone-3"]
+zone-5 = ["zone-4"]
+zone-6 = ["zone-5"]
+
+[[bin]]
+name = "trying-esp-hal-again"
+path = "./src/bin/main.rs"
+test = false
+
+[[test]]
+harness = false
+name    = "hello_test"
+
+[lib]
+test = false
+
+[dependencies]
+esp-hal = { version = "=1.0.0-rc.1", features = [
+  "defmt",
+  "esp32c6",
+  "unstable",
+] }
+
+esp-rtos = { version = "0.1.1", features = [
+  "defmt",
+  "embassy",
+  "esp-alloc",
+  "esp-radio",
+  "esp32c6",
+] }
+
+defmt                  = "1.0.1"
+esp-bootloader-esp-idf = { version = "0.3.0", features = ["esp32c6"] }
+
+embassy-net = { version = "0.7.0", features = [
+  "defmt",
+  "dhcpv4",
+  "medium-ethernet",
+  "tcp",
+  "udp",
+] }
+embedded-io = { version = "0.7.1", features = ["defmt"] }
+embedded-io-async = { version = "0.7.0", features = ["defmt"] }
+esp-alloc = { version = "0.9.0", features = ["defmt"] }
+panic-rtt-target = { version = "0.2.0", features = ["defmt"] }
+rtt-target = { version = "0.6.1", features = ["defmt"] }
+# for more networking protocol support see https://crates.io/crates/edge-net
+embassy-executor = { version = "0.9.0", features = ["defmt"] }
+embassy-time = { version = "0.5.0", features = ["defmt"] }
+esp-radio = { version = "0.16.0", features = [
+  "defmt",
+  "esp-alloc",
+  "esp32c6",
+  "smoltcp",
+  "unstable",
+  "wifi",
+] }
+smoltcp = { version = "0.12.0", default-features = false, features = [
+  "defmt",
+  "medium-ethernet",
+  "multicast",
+  "proto-dhcpv4",
+  "proto-dns",
+  "proto-ipv4",
+  "socket-dns",
+  "socket-icmp",
+  "socket-raw",
+  "socket-tcp",
+  "socket-udp",
+] }
+
+critical-section = "1.2.0"
+static_cell      = { version = "2.1.1", features = ["nightly"] }
+esp-config = "0.6.0"
+edge-dhcp = { version = "0.6.0", features = ["defmt"] }
+edge-nal = "0.5.0"
+edge-nal-embassy = { version = "0.6.0", features = ["defmt"] }
+anyhow = { version = "1.0.100", default-features = false }
+picoserve = { version = "0.17.0", features = ["defmt", "embassy", "json"] }
+embassy-sync = { version = "0.7.2", features = ["defmt"] }
+serde = { version = "1.0.228", features = ["derive"], default-features = false }
+edge-captive = { version = "0.6.0", features = ["defmt"] }
+
+[dev-dependencies]
+embedded-test = { version = "0.7.0-alpha.3", git = "https://github.com/probe-rs/embedded-test", branch = "next", features = [
+  "defmt",
+  "embassy",
+  "external-executor",
+] }
+
+[profile.dev]
+# Rust debug is too slow.
+# For debug builds always builds with some optimization
+opt-level = "s"
+
+[profile.release]
+codegen-units    = 1     # LLVM can perform better optimizations using a single thread
+debug            = 2
+debug-assertions = false
+incremental      = false
+lto              = 'fat'
+opt-level        = 's'
+overflow-checks  = false

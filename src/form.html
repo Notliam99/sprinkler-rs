@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zone Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .zone-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .zone-control label {
+            margin-right: 10px;
+        }
+        #submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zone Control Panel</h1>
+    <form id="zoneForm">
+        <div class="zone-control">
+            <label for="debug_led">Debug LED:</label>
+            <select name="debug_led" id="debug_led">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_1">Zone 1:</label>
+            <select name="zone_1" id="zone_1">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_2">Zone 2:</label>
+            <select name="zone_2" id="zone_2">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_3">Zone 3:</label>
+            <select name="zone_3" id="zone_3">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_4">Zone 4:</label>
+            <select name="zone_4" id="zone_4">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_5">Zone 5:</label>
+            <select name="zone_5" id="zone_5">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <div class="zone-control">
+            <label for="zone_6">Zone 6:</label>
+            <select name="zone_6" id="zone_6">
+                <option value="Off">Off</option>
+                <option value="On">On</option>
+            </select>
+        </div>
+
+        <button type="submit" id="submit-btn">Send Configuration</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('zoneForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Create JSON payload
+            const formData = {
+                debug_led: document.getElementById('debug_led').value,
+                zone_1: document.getElementById('zone_1').value,
+                zone_2: document.getElementById('zone_2').value,
+                zone_3: document.getElementById('zone_3').value,
+                zone_4: document.getElementById('zone_4').value,
+                zone_5: document.getElementById('zone_5').value,
+                zone_6: document.getElementById('zone_6').value
+
